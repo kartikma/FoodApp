@@ -49,17 +49,14 @@ def reset_password():
 def user_auth(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-    print username+""+password
-    user1 = User.objects.filter(username = username ,password = password)
-    print user1
-    user = authenticate(username = username, password = password)
-    print user
-
+    user = authenticate(username='john', password='secret')
     if user is not None:
-        auth.login(request, user)
-        return HttpResponseRedirect('/accounts/loggedin')
+    # the password verified for the user
+        if user.is_active:
+             return HttpResponseRedirect('success/register')
     else:
-        return HttpResponseRedirect('/accounts/invalid')
+        return HttpResponseRedirect('/register')
+
 
 
 
